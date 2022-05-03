@@ -51,7 +51,7 @@ begin
         Connected := config['connected'].ToBoolean;
       end
     except
-      raise Exception.Create('Configuration file missing keys');
+      raise Exception.Create('Configuration file missing keys or wrong values');
     end
   else if conn is TADOConnection then
   else

@@ -1,5 +1,4 @@
 ﻿program delphiUtils;
-
 uses
   System.StartUpCopy,
   FMX.Forms,
@@ -10,7 +9,6 @@ uses
   test.uFilesystem in '..\tests\test.uFilesystem.pas' {testUFilesystem};
 
 {$R *.res}
-
 begin
   Application.Initialize;
   Application.CreateForm(TmainForm, mainForm);

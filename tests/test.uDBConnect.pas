@@ -146,5 +146,4 @@ end;
 
 begin
   uFilesystem.anchorProjectRoot('delphi-utils');
-
 end.
