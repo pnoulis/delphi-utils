@@ -13,8 +13,14 @@ interface
  }
  procedure anchorProjectRoot(const projectName: string);
 
+ {
+   Makes sure path exists and user has requested accessMode
+ }
+ procedure ensureFile(path: string; const accessMode: byte);
+
 implementation
 uses
+FMX.Dialogs,
 System.sysUtils,
 System.IOUtils;
 
@@ -41,13 +47,40 @@ System.IOUtils;
  procedure anchorProjectRoot(const projectName: string);
   begin
   const projectRoot = getProjectRoot(projectName);
-  try
-   if projectRoot = '' then
-   raise EFileNotFoundException.Create('Project root not found: ' + projectName);
-   TDirectory.SetCurrentDirectory(projectRoot);
-  except
-  raise;
-  end;
+  if projectRoot = '' then
+  raise EFileNotFoundException.Create('Project root not found: ' + projectName)
+  else
+  TDirectory.SetCurrentDirectory(projectRoot);
   end;
 
+  procedure ensureFile(path: string; const accessMode: byte);
+  begin
+    var
+      LFile: file;
+
+      path := TPath.GetFullPath(path);
+
+      if (accessMode < fmOpenRead) or (accessMode > fmOpenReadWrite) then
+        raise Exception.CreateFmt('Unrecognized access mode: %d', [accessMode]);
+
+      if not FileExists(path) then
+        raise Exception.Create('Missing file: ' + path);
+
+      AssignFile(LFile, path);
+      FileMode := accessMode;
+
+      try
+        Reset(LFile);
+      except
+        case accessMode of
+          fmOpenRead:
+            raise Exception.Create('Missing read permissions: ' + path);
+          fmOpenWrite:
+            raise Exception.Create('Missing write permissions: ' + path);
+          fmOpenReadWrite:
+            raise Exception.Create('Missing read & write permissions: ' + path);
+        end;
+      end;
+      CloseFile(LFile);
+  end;
 end.

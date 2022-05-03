@@ -26,8 +26,8 @@ interface
 
 implementation
  uses
-  uFilesystem,
-  test.uDBConnect;
+  test.uDBConnect,
+  test.uFilesystem;
  {$R *.fmx}
 
  procedure TmainForm.btnTestUDBConnectionClick(Sender: TObject);
@@ -37,12 +37,8 @@ implementation
 
 procedure TmainForm.btnTestUFilesystemClick(Sender: TObject);
 begin
-const projectRoot = 'delphi-utils';
-const found = ufilesystem.getProjectRoot(projectRoot);
-if found = '' then
-showMessage('project root not found: ' + projectRoot)
-else
-showMessage('project root found: ' + found);
+
+test.uFilesystem.testUFilesystem.Show;
 end;
 
 end.

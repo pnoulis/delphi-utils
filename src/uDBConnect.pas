@@ -2,109 +2,81 @@ unit uDBConnect;
 
 interface
 
- procedure connectDB(conn: TObject; const iniSection, iniPath: string);
+procedure setupDBconn(conn: TObject; const iniSection: string; iniPath: string);
 
 implementation
 
- uses
+uses
   FireDAC.Comp.Client, Data.Win.ADODB,
   System.IniFiles, System.SysUtils, System.Classes,
+  System.IOUtils, uFilesystem,
   System.Generics.Collections;
 
- type
+type
   TConfig = TDictionary<string, string>;
 
- const
-  CONFIG_DEFAULT_PATH = '\..\..\..\config\config.ini';
-
- procedure ensureFile(const path: string; const accessMode: byte);
-  begin
-   var
-    LFile: file;
-
-   if (accessMode < fmOpenRead) or (accessMode > fmOpenReadWrite) then
-    raise Exception.CreateFmt('Unrecognized access mode: %d', [accessMode]);
-
-   if not FileExists(path) then
-    raise Exception.Create('Missing file: ' + path);
-
-   AssignFile(LFile, path);
-   FileMode := accessMode;
-
-   try
-    Reset(LFile);
-   except
-    case accessMode of
-    fmOpenRead:
-     raise Exception.Create('Missing read permissions: ' + path);
-    fmOpenWrite:
-     raise Exception.Create('Missing write permissions: ' + path);
-    fmOpenReadWrite:
-     raise Exception.Create('Missing read & write permissions: ' + path);
-    end;
-   end;
-   CloseFile(LFile);
-  end;
-
- procedure readIni(const section, path: string; const config: TConfig);
-  begin
-   var
+procedure readIni(const section, path: string; const config: TConfig);
+begin
+  var
     ini: TIniFile := nil;
-   var
+  var
     keys: TStringList := nil;
-
-   try
+  try
     ini := TIniFile.Create(path);
     keys := TStringList.Create;
+    if not ini.SectionExists(section) then
+      raise Exception.Createfmt('%s missing section: %s', [path, section]);
     ini.ReadSection(section, keys);
     for var key in keys do
-     config.add(key, ini.ReadString(section, key, ''));
-   finally
+      config.add(key, ini.ReadString(section, key, ''));
+  finally
     FreeAndNil(ini);
     FreeAndNil(keys);
-   end;
   end;
+end;
 
- procedure configureConnection(conn: TObject; const config: TConfig);
-  begin
-   if conn is TFDConnection then
-    with conn as TFDConnection do
-     begin
-      DriverName := config['DriverID'];
-      params.add('Server=' + config['Server']);
-      params.add('Database=' + config['Database']);
-      params.add('User_Name=' + config['User_Name']);
-      params.add('OSAuthent=' + config['OSAuthent']);
-      params.add('Password=' + config['Password']);
-      LoginPrompt := false;
-      Connected := true;
-     end
-   else if conn is TADOConnection then
-   else
+procedure configureConnection(conn: TObject; const config: TConfig);
+begin
+  if conn is TFDConnection then
+    try
+      with conn as TFDConnection do
+      begin
+        DriverName := config['driverID'];
+        params.add('Server=' + config['server']);
+        params.add('Database=' + config['database']);
+        params.add('User_Name=' + config['username']);
+        params.add('OSAuthent=' + config['osAuthent']);
+        params.add('Password=' + config['password']);
+        LoginPrompt := config['loginPrompt'].ToBoolean;
+        Connected := config['connected'].ToBoolean;
+      end
+    except
+      raise Exception.Create('Configuration file missing keys');
+    end
+  else if conn is TADOConnection then
+  else
     raise Exception.Create('Unrecognized delphi connection type: ' +
-       conn.ClassName);
+      conn.ClassName);
+end;
 
-  end;
-
- procedure connectDB(conn: TObject; const iniSection, iniPath: string);
-  begin
-   var
+procedure setupDBconn(conn: TObject; const iniSection: string; iniPath: string);
+begin
+  var
     config: TConfig := nil;
-
-   try
+  try
+    iniPath := TPath.GetFullPath(iniPath);
     config := TConfig.Create;
     try
-     ensureFile(iniPath, fmOpenRead);
-     readIni(iniSection, iniPath, config);
-     configureConnection(conn, config);
+      uFilesystem.ensureFile(iniPath, fmOpenRead);
+      readIni(iniSection, iniPath, config);
+      configureConnection(conn, config);
     except
-     on E: Exception do
-      raise Exception.Create('Failed to connect to DB: ' + E.Message);
+      on E: Exception do
+        raise Exception.Create('Failed to connect to DB: ' + E.Message);
     end;
-   finally
+  finally
     FreeAndNil(config);
-   end;
-
   end;
+end;
 
 end.
