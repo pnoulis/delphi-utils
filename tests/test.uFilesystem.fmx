@@ -37,10 +37,93 @@ object testUFilesystem: TtestUFilesystem
       Size.Width = 640.000000000000000000
       Size.Height = 57.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 0
+      TabOrder = 3
       OnClick = Memo1Click
-      Viewport.Width = 636.000000000000000000
-      Viewport.Height = 53.000000000000000000
+      Viewport.Width = 640.000000000000000000
+      Viewport.Height = 57.000000000000000000
+    end
+    object ensureFileTest1: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      Lines.Strings = (
+        
+          '2. enusrefile should throw error if the file is not found in the' +
+          ' path provided')
+      ReadOnly = True
+      ShowScrollBars = False
+      StyledSettings = [FontColor]
+      TextSettings.Font.Family = 'Comic Sans MS'
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      TextSettings.WordWrap = True
+      Align = Top
+      Cursor = crHandPoint
+      EnabledScroll = False
+      Position.Y = 57.000000000000000000
+      Size.Width = 640.000000000000000000
+      Size.Height = 57.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      OnClick = ensureFileTest1Click
+      Viewport.Width = 640.000000000000000000
+      Viewport.Height = 57.000000000000000000
+    end
+    object ensureFileTest2: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      Lines.Strings = (
+        
+          '3. ensureFile should throw an error if the user does not have th' +
+          'e neccessary'
+        '   file access permissions requested')
+      ReadOnly = True
+      ShowScrollBars = False
+      StyledSettings = [FontColor]
+      TextSettings.Font.Family = 'Comic Sans MS'
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      TextSettings.WordWrap = True
+      Align = Top
+      Cursor = crHandPoint
+      EnabledScroll = False
+      Position.Y = 114.000000000000000000
+      Size.Width = 640.000000000000000000
+      Size.Height = 57.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      OnClick = ensureFileTest2Click
+      Viewport.Width = 640.000000000000000000
+      Viewport.Height = 57.000000000000000000
+    end
+    object ensureFileTest3: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      Lines.Strings = (
+        
+          '4. ensureFile should throw an error if the access mode bits prov' +
+          'ided is not'
+        '    recognized')
+      ReadOnly = True
+      ShowScrollBars = False
+      StyledSettings = [FontColor]
+      TextSettings.Font.Family = 'Comic Sans MS'
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      TextSettings.WordWrap = True
+      Align = Top
+      Cursor = crHandPoint
+      EnabledScroll = False
+      Position.Y = 171.000000000000000000
+      Size.Width = 640.000000000000000000
+      Size.Height = 57.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      OnClick = ensureFileTest3Click
+      Viewport.Width = 640.000000000000000000
+      Viewport.Height = 57.000000000000000000
     end
   end
 end

@@ -1,0 +1,60 @@
+object TestConfig: TTestConfig
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object getINITest: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      '1. getINI Test')
+    ReadOnly = True
+    ShowScrollBars = False
+    StyledSettings = [FontColor]
+    TextSettings.Font.Family = 'Comic Sans MS'
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.HorzAlign = Center
+    TextSettings.WordWrap = True
+    Align = Top
+    Cursor = crHandPoint
+    EnabledScroll = False
+    Size.Width = 640.000000000000000000
+    Size.Height = 57.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    OnClick = getINITestClick
+    Viewport.Width = 636.000000000000000000
+    Viewport.Height = 53.000000000000000000
+  end
+  object readINITest: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      '1. readINI test')
+    ReadOnly = True
+    ShowScrollBars = False
+    StyledSettings = [FontColor]
+    TextSettings.Font.Family = 'Comic Sans MS'
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.HorzAlign = Center
+    TextSettings.WordWrap = True
+    Align = Top
+    Cursor = crHandPoint
+    EnabledScroll = False
+    Position.Y = 57.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 57.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    OnClick = readINITestClick
+    Viewport.Width = 636.000000000000000000
+    Viewport.Height = 53.000000000000000000
+  end
+end

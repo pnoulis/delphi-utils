@@ -265,6 +265,11 @@
             <Form>testUTabs</Form>
             <FormType>fmx</FormType>
         </DCCReference>
+        <DCCReference Include="uConfig.pas"/>
+        <DCCReference Include="..\tests\test.uConfig.pas">
+            <Form>TestConfig</Form>
+            <FormType>fmx</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

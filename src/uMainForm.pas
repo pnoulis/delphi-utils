@@ -1,53 +1,70 @@
 ﻿unit uMainForm;
 
 interface
-
- uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes,
+uses
+  System.SysUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
   System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Memo.Types,
-  FMX.Controls.Presentation, FMX.ScrollBox, FMX.Memo, FMX.Layouts;
+  FMX.Types,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Graphics,
+  FMX.Dialogs,
+  FMX.Memo.Types,
+  FMX.Controls.Presentation,
+  FMX.ScrollBox,
+  FMX.Memo,
+  FMX.Layouts;
 
- type
+type
   TmainForm = class(TForm)
-   GridLayout1: TGridLayout;
-   btnTestUDBConnection: TMemo;
-   btnTestUFilesystem: TMemo;
-   btnTestUTabs: TMemo;
-   procedure btnTestUDBConnectionClick(Sender: TObject);
-   procedure btnTestUFilesystemClick(Sender: TObject);
-   procedure btnTestUTabsClick(Sender: TObject);
-   private
-    { Private declarations }
-   public
-    { Public declarations }
+    GridLayout1: TGridLayout;
+    BtnTestUDBConnection: TMemo;
+    BtnTestUFilesystem: TMemo;
+    BtnTestUTabs: TMemo;
+    BtnTestUConfig: TMemo;
+    procedure BtnTestUDBConnectionClick(Sender: TObject);
+    procedure BtnTestUFilesystemClick(Sender: TObject);
+    procedure BtnTestUTabsClick(Sender: TObject);
+    procedure BtnTestUConfigClick(Sender: TObject);
+    private
+      { Private declarations }
+    public
+      { Public declarations }
   end;
 
- var
-  mainForm: TmainForm;
+var
+  MainForm: TmainForm;
 
 implementation
+uses
+  Test.UConfig,
+  Test.UTabs,
+  Test.UDBConnect,
+  Test.UFilesystem;
+{$R *.fmx}
 
- uses
-  test.uTabs,
-  test.uDBConnect,
-  test.uFilesystem;
- {$R *.fmx}
+procedure TmainForm.BtnTestUConfigClick(Sender: TObject);
+begin
+  Test.UConfig.TestConfig.Show;
+end;
 
- procedure TmainForm.btnTestUDBConnectionClick(Sender: TObject);
-  begin
-   test.uDBConnect.testUDBconnect.Show;
-  end;
+procedure TmainForm.BtnTestUDBConnectionClick(Sender: TObject);
+begin
+  Test.UDBConnect.TestUDBconnect.Show;
+end;
 
- procedure TmainForm.btnTestUFilesystemClick(Sender: TObject);
-  begin
+procedure TmainForm.BtnTestUFilesystemClick(Sender: TObject);
+begin
 
-   test.uFilesystem.testUFilesystem.Show;
-  end;
+  Test.UFilesystem.TestUFilesystem.Show;
+end;
 
- procedure TmainForm.btnTestUTabsClick(Sender: TObject);
-  begin
-   test.uTabs.testUTabs.Show;
-  end;
+procedure TmainForm.BtnTestUTabsClick(Sender: TObject);
+begin
+  Test.UTabs.TestUTabs.Show;
+end;
 
 end.
